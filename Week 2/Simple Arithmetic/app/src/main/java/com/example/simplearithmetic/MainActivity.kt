@@ -121,6 +121,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@ExperimentalMaterial3Api
 @Composable
 fun Calc(
     modifier: Modifier = Modifier,
