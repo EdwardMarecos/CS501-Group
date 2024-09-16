@@ -47,11 +47,75 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             SimpleArithmeticTheme {
-//                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-//                    Calc(
-//                        modifier = Modifier.padding(innerPadding)
-//                    )
-//                }
+                var input1 by remember { mutableStateOf("") }
+                var input2 by remember { mutableStateOf("") }
+                val operation = remember { mutableStateOf("") }
+                val output = remember { mutableStateOf("Input some numbers to get started") }
+
+                SimpleArithmeticTheme {
+                    Scaffold(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        topBar = {
+                            TopAppBar(
+                                title = {
+                                    Text(
+                                        text = "Simple Arithmetic",
+                                        color = Color.White,
+                                        fontWeight = MaterialTheme.typography.titleLarge.fontWeight,
+                                        fontFamily = MaterialTheme.typography.titleLarge.fontFamily,
+                                    )
+                                },
+                                colors = TopAppBarDefaults.topAppBarColors(
+                                    containerColor = Color(0xff023e8a)
+                                )
+                            )
+                        },
+                        floatingActionButton = {
+                            // The compute button now uses the state
+                            Button(
+                                onClick = {
+                                    // Compute result and update the output state
+                                    output.value = getOutput(
+                                        input1.toIntOrNull() ?: 0,
+                                        input2.toIntOrNull() ?: 0,
+                                        operation.value
+                                    )
+                                },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color(0xFF2196F3)
+                                ),
+                                modifier = Modifier.padding(top = 16.dp)
+                            ) {
+                                Text(
+                                    text = "\uD83E\uDD16 Compute",
+                                    modifier = Modifier.padding(vertical = 8.dp),
+                                    color = Color.White,
+                                    fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                                )
+                            }
+                        }
+                    ) { innerPadding ->
+                        Calc(
+                            modifier = Modifier
+                                .padding(innerPadding)
+                                .background(Color(0xFFBBDEFB)),
+                            input1 = input1,
+                            input2 = input2,
+                            operation = operation.value,
+                            onInputChange1 = { input1 = it },
+                            onInputChange2 = { input2 = it },
+                            onOperationChange = { operation.value = it },
+                            onClear = {
+                                input1 = ""
+                                input2 = ""
+                                operation.value = ""
+                                output.value = "Input some numbers to get started"
+                            },
+                            output = output.value
+                        )
+                    }
+                }
             }
         }
     }
