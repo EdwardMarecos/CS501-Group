@@ -45,12 +45,18 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             CalculatorTheme {
-//                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-//                    Greeting(
-//                        name = "Android",
-//                        modifier = Modifier.padding(innerPadding)
-//                    )
-//                }
+                CalculatorTheme {
+                    Scaffold(
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) { innerPadding ->
+                        Calculator(
+                            modifier = Modifier
+                                .background(Color(0xFFBBDEFB))
+                                .padding(innerPadding),
+                        )
+                    }
+                }
             }
         }
     }
